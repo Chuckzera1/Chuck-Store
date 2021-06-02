@@ -1,20 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addProduct } from 'store/modules/cart/action';
+import {
+  addProduct,
+  cartRemoveProduct,
+  decreaseProduct,
+} from 'store/modules/cart/action';
 import { Container } from './styles';
 
 function ProductCartCard({ product, products }) {
   const dispatch = useDispatch();
   const { id, name, image, price, quantity } = product;
   function addQuantity() {
-    product = { ...product, quantity: 1 };
+    product = { ...product, quantity: +1 };
     dispatch(addProduct({ product, products }));
   }
 
+  function removeItem() {
+    dispatch(cartRemoveProduct(product));
+  }
+
   function removeQuantity() {
-    product = { ...product, quantity: -1 };
-    dispatch(addProduct({ product, products }));
+    if (product.quantity > 1) dispatch(decreaseProduct({ product, products }));
+    else removeItem();
   }
 
   return (
@@ -28,18 +36,27 @@ function ProductCartCard({ product, products }) {
               </div>
               <div className="primary-info">{name}</div>
               <div className="secondary-info">
-                <span className="button-decremease">
-                  <button type="button" onClick={removeQuantity}>
-                    -
-                  </button>
-                </span>
-                <span className="quantity">{quantity}x</span>
-                <span className="button-increment">
-                  <button type="button" onClick={addQuantity}>
-                    +
-                  </button>
-                </span>
-                <span className="price">${price}</span>
+                <button
+                  className="remove-item"
+                  type="button"
+                  onClick={removeItem}
+                >
+                  Remover
+                </button>
+                <div className="buttons-price">
+                  <span className="price">${price}</span>
+                  <span className="button-decremease">
+                    <button type="button" onClick={removeQuantity}>
+                      -
+                    </button>
+                  </span>
+                  <span className="quantity">{quantity}x</span>
+                  <span className="button-increment">
+                    <button type="button" onClick={addQuantity}>
+                      +
+                    </button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>

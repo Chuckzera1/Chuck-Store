@@ -38,8 +38,21 @@ export const Container = styled.main`
     margin-top: 30px;
   }
 
+  .cart-body {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .shop-box{
+    width: 100%;
+    max-height: 80vh;
+    overflow: auto;
+  }
+
   .shop-list {
-    list-style: none;
+    ul {
+      list-style: none;
+    }
     li {
       display: inline-block;
       margin-right: 24px;
@@ -64,12 +77,8 @@ export const Container = styled.main`
     }
 
 
-  @media screen and (min-width: 1336px) {
-    .content {
-      column-count: 2;
-      > * {
-        break-inside: avoid;
-      }
+  @media screen and (max-width: 768px) {
+    .cart-body {
     }
   }
 `;

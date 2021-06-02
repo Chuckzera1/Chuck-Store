@@ -1,54 +1,73 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { AiOutlineLoading } from 'react-icons/ai';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addProduct } from 'store/modules/cart/action';
+import Alert from 'Components/Alert';
 import { Container } from './styles';
 
 function ProductCard({ product, products, loading }) {
   const dispatch = useDispatch();
-  const { error, loading: load } = useSelector((state) => state.cart);
-
   const { name, price, id, image } = product;
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
   const [show, setShow] = useState(false);
-  // const [isError, setIsError] = useState(false);
+  const [error, setError] = useState(false);
   const [alertType, setAlertType] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+
+  // Mostra popup informando sucesso ou falha
+  // eslint-disable-next-line no-unused-vars
+  function showAlertFeedback(
+    message = `${quantity}x ${name} added successfully`,
+    isError = false
+  ) {
+    setShow(false);
+    const type = isError ? 'error' : 'success';
+    setAlertType(type);
+    setAlertMessage(message);
+    setError(isError);
+
+    setShow(true);
+    // Mantem o alerta visivel por 3 segundos
+    setTimeout(() => {
+      setShow(false);
+    }, 3000);
+  }
 
   // Valida o campo antes de atualizar o estado
   function handleOnChange(e) {
     const { value, validity } = e.target;
     if (!validity.valid) return;
+
+    if (parseInt(value, 10) > product.stock) {
+      const message = `${product.name} out of stock! In stock only ${product.stock}`;
+      showAlertFeedback(message, true);
+      return;
+    }
+
     setQuantity(value);
   }
-  // Mostra popup informando sucesso ou falha
-  // eslint-disable-next-line no-unused-vars
-  const showAlertFeedback = useCallback(() => {
-    if (load) return;
-    const message = error || `${quantity}x ${name} adicionado com sucesso`;
-    const type = error ? 'error' : 'success';
-    setAlertType(type);
-    setAlertMessage(message);
-    setShow(true);
-    // Mantem o alerta visivel por 3 segundos
-    console.log(show, alertMessage, alertType);
-    setTimeout(() => {
-      setShow(false);
-    }, 3000);
-  }, [error]);
 
   // Dispara ação de adição do produto
   async function addToCart() {
-    if (!quantity) return;
-    product = { ...product, quantity: parseInt(quantity, 10) };
-
+    if (!quantity) {
+      const message = 'Enter the amount, please';
+      showAlertFeedback(message, true);
+      return;
+    }
+    product = {
+      ...product,
+      quantity: parseInt(quantity, 10),
+    };
     dispatch(addProduct({ product, products }));
+    showAlertFeedback();
+    setQuantity(0);
   }
 
   return (
     <>
       <Container>
+        <Alert message={alertMessage} type={alertType} show={show} />
         <div className="info-card">
           <div className="card-body">
             {!loading && (
@@ -62,8 +81,9 @@ function ProductCard({ product, products, loading }) {
                   <div className="quantity-input">
                     <input
                       pattern="[0-9]*"
+                      className={error ? 'error' : ''}
                       onChange={(e) => handleOnChange(e)}
-                      value={quantity}
+                      value={quantity || ''}
                       maxLength="5"
                       placeholder="Product amount"
                     />
@@ -98,6 +118,10 @@ function ProductCard({ product, products, loading }) {
   );
 }
 
+ProductCard.defaultProps = {
+  products: [],
+};
+
 ProductCard.propTypes = {
   product: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -105,6 +129,7 @@ ProductCard.propTypes = {
     price: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     stock: PropTypes.number.isRequired,
+    quantity: PropTypes.number.isRequired,
   }).isRequired,
   products: PropTypes.arrayOf(
     PropTypes.shape({
@@ -116,7 +141,7 @@ ProductCard.propTypes = {
         quantity: PropTypes.number.isRequired,
       }).isRequired,
     }).isRequired
-  ).isRequired,
+  ),
   loading: PropTypes.bool.isRequired,
 };
 
