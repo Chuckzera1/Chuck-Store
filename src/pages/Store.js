@@ -45,9 +45,7 @@ function Store() {
           (f) => f.name.toLowerCase().indexOf(s) > -1
         ))
     );
-    if (productsArray?.length > 0) {
-      setProductsFiltered(productsArray);
-    }
+    setProductsFiltered(productsArray);
   }
 
   // Filtra toda vez que o valor de search ou a lista são atualizados

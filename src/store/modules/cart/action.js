@@ -5,6 +5,20 @@ export function cartRemoveProduct(value) {
   };
 }
 
+export function cartDecreaseProduct(value) {
+  return {
+    type: 'CART_DECREASE',
+    payload: { value },
+  };
+}
+
+export function decreaseProduct(value) {
+  return {
+    type: 'CART_DECREASE_REQUEST',
+    payload: { value },
+  };
+}
+
 export function cartClearProducts() {
   return {
     type: 'CART_CLEAR',

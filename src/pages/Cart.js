@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Content from 'Components/Content';
 import TitleHeader from 'Components/TitleHeader';
 import ProductCartCard from 'Components/ProductCartCard';
+import CartResume from 'Components/CartResume';
 
 function Cart() {
   const { products } = useSelector((state) => state.cart);
@@ -11,10 +12,19 @@ function Cart() {
     <>
       <TitleHeader title="Cart" />
       <Content>
-        <div className="cart-item">
-          {products.map((p) => (
-            <ProductCartCard product={p} products={products} />
-          ))}
+        <div className="cart-body">
+          <div className="shop-box">
+            <div className="shop-list">
+              <ul>
+                {products.map((p, { id }) => (
+                  <li key={id}>
+                    <ProductCartCard product={p} products={products} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <CartResume />
         </div>
       </Content>
     </>
