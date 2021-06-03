@@ -3,38 +3,12 @@ import styled from 'styled-components';
 export const Container = styled.header`
   position: fixed;
   top: 0;
-  left: 0;
+  display: flex;
+  flex-direction: row-reverse;
   width: 100%;
   height: 100%;
   pointer-events: none;
   z-index: 99;
-
-  .logout {
-    button {
-      text-decoration: none;
-      appearance: none;
-      width: 238px;
-      height: 44px;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      color: var(--color-body);
-      display: flex;
-      align-items: center;
-      line-height: 1em;
-      padding: 12px 15px;
-      border-radius: 5px;
-      margin-bottom: 5px;
-      text-align: left;
-      color: #707070;
-      .btn-icon {
-        display: flex;
-      }
-    }
-    img {
-      margin-right: 15px;
-    }
-  }
 
   .sidebar,
   .topbar {
@@ -45,7 +19,6 @@ export const Container = styled.header`
   .sidebar {
     position: absolute;
     top: 0;
-    left: 0;
     width: 280px;
     height: 100%;
     padding: 20px;
@@ -80,23 +53,12 @@ export const Container = styled.header`
           height: 25px;
         }
         &.active {
-          background: transparent
-            linear-gradient(74deg, #004ab0 0%, #6457e8 100%) 0% 0% no-repeat
-            padding-box;
+          background: transparent linear-gradient(74deg,#ff8100 0%,#e8a757 100%) 0% 0% no-repeat padding-box;
           opacity: 1;
           color: #fff;
         }
       }
     }
-  }
-
-  .btn-logout {
-    position: absolute;
-    float: bottom;
-    bottom: 40px;
-    left: 30px;
-    z-index: 1;
-    color: black;
   }
 
   .topbar {
@@ -174,6 +136,7 @@ export const Container = styled.header`
   .leads-menu {
     justify-content: center;
     display: flex;
+    margin-top: 40px;
   }
 
   .user-menu {
@@ -222,14 +185,8 @@ export const Container = styled.header`
       max-width: 300px;
     }
   }
-    .logout {
-      z-index: 1;
-      position: absolute;
-      bottom: 8%;
-      left: 1%;
-    }
     .sidebar {
-      transform: translate3d(-100%, 0, 0);
+      transform: translate3d(+100%, 0, 0);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       top: var(--topbar-mobile-height);
 

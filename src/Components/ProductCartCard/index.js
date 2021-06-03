@@ -2,26 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import {
-  addProduct,
-  cartRemoveProduct,
   decreaseProduct,
+  increaseProduct,
+  removeProduct,
 } from 'store/modules/cart/action';
 import { Container } from './styles';
 
 function ProductCartCard({ product, products }) {
   const dispatch = useDispatch();
-  const { id, name, image, price, quantity } = product;
+  const { id, name, image, price, quantity, stock } = product;
+
   function addQuantity() {
-    product = { ...product, quantity: +1 };
-    dispatch(addProduct({ product, products }));
+    if (stock - quantity < 1) {
+      alert('Out of Stock');
+      return;
+    }
+    dispatch(increaseProduct({ product, products }));
   }
 
   function removeItem() {
-    dispatch(cartRemoveProduct(product));
+    dispatch(removeProduct({ id: product.id }));
   }
 
   function removeQuantity() {
-    if (product.quantity > 1) dispatch(decreaseProduct({ product, products }));
+    if (quantity > 1) dispatch(decreaseProduct({ product, products }));
     else removeItem();
   }
 
@@ -76,6 +80,7 @@ ProductCartCard.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
   products: PropTypes.arrayOf(
@@ -85,8 +90,9 @@ ProductCartCard.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
+        stock: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
-      }).isRequired,
+      }),
     }).isRequired
   ),
 };

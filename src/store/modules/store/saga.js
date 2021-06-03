@@ -5,11 +5,8 @@ import { loadStoreProducts, loadStoreFail } from './action';
 export function* loadStoreData() {
   try {
     const { data } = yield call(api.get, 'product');
-    data.map((d) => ({
-      ...d,
-      quantity: 0,
-    }));
-    yield put(loadStoreProducts(data));
+    const products = data.map((d) => ({ ...d, quantity: 0 }));
+    yield put(loadStoreProducts(products));
   } catch (err) {
     yield put(loadStoreFail(err));
   }

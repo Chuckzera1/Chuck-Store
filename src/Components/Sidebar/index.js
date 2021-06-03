@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function Sidebar({ handleMenu, isMenuOpened }) {
@@ -22,19 +22,17 @@ function Sidebar({ handleMenu, isMenuOpened }) {
 
   return (
     <aside className="sidebar">
-      <Link to="/" title="Dashboard" className="logo" onClick={handleMenu}>
-        Home
-      </Link>
-      <nav className="user-menu">
-        <button type="button" className="btn">
-          Botão{' '}
-        </button>
-      </nav>
+      Store
       <nav className="leads-menu">
         <ul className="main-menu">
           <li>
-            <NavLink to="/" exact>
-              Loja
+            <NavLink to="/" exact onClick={handleMenu}>
+              Store{' '}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/cart" exact>
+              Cart
             </NavLink>
           </li>
         </ul>

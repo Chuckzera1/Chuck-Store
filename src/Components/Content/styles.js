@@ -14,14 +14,6 @@ export const Container = styled.main`
     display: flex;
     align-items: center;
     justify-content: center;
-    .block {
-      margin-bottom: 25px;
-    }
-    h1 {
-      margin: 0;
-      color: var(--color-blue-2);
-      font-size: 1.8rem;
-    }
     .secondary-info {
       opacity: 0.5;
       font-size: 12px;
@@ -31,11 +23,6 @@ export const Container = styled.main`
       align-items: center;
       justify-content: center;
     }
-  }
-
-  .content,
-  .content-extend {
-    margin-top: 30px;
   }
 
   .cart-body {
@@ -59,10 +46,6 @@ export const Container = styled.main`
     }
   }
 
-  .hide-element {
-    display: none !important;
-  }
-
   @media screen and (min-width: 1024px) {
     padding-left: 66px;
     padding-right: 40px;
@@ -75,10 +58,4 @@ export const Container = styled.main`
         font-size: 2.6rem;
       }
     }
-
-
-  @media screen and (max-width: 768px) {
-    .cart-body {
-    }
-  }
 `;

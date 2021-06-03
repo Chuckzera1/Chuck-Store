@@ -17,3 +17,16 @@ export function loadStoreData() {
     type: 'LOAD_DATA',
   };
 }
+
+export function updateQuantityProductStore(value) {
+  return {
+    type: 'UPDATE_QUANTITY',
+    payload: { value },
+  };
+}
+
+export function resetQuantity() {
+  return {
+    type: 'RESET_QUANTITY',
+  };
+}

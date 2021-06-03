@@ -19,7 +19,6 @@ function SearchBar() {
       <input
         className="search-input"
         type="text"
-        pattern="[A-Za-z]*"
         placeholder="Search..."
         value={search.searchValue}
         onChange={(e) => handleSearchChange(e)}
