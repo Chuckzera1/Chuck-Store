@@ -23,6 +23,7 @@ export const Container = styled.div`
     padding: 0;
   }
   .resume-box {
+    margin-right: 30px;
     span {
       font-weight: bold;
     }
@@ -76,5 +77,11 @@ export const Container = styled.div`
     font-size: 20px !important;
     color: black !important;
     margin-left: 0px !important;
+  }
+
+  @media screen and (max-width: 1200px) {
+    .resume-box {
+      margin-right: 0px;
+    }
   }
 `;

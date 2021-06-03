@@ -133,8 +133,8 @@ ProductCard.propTypes = {
         price: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
         quantity: PropTypes.number.isRequired,
-      }).isRequired,
-    }).isRequired
+      }),
+    })
   ),
   loading: PropTypes.bool.isRequired,
 };

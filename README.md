@@ -10,8 +10,9 @@
 
 #### Scripts:
 
-    start: Faz start do desenvolvimento
-    build: Faz o build para deploy
+    -start: Faz start do projeto
+### WorkFlow
+  - GitFlow
 
 ### Git Flow Branchs prefixes:
   - master: Branch principal (release)
