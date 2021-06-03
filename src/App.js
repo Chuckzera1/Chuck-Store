@@ -5,6 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import Routes from 'Routes';
 import history from 'services/history';
 import GlobalStyles from 'styles/globalStyles';
+import Header from 'Components/Header';
 import './App.css';
 import './config/ReactotronConfig';
 import { store, persistor } from './store';
@@ -14,7 +15,7 @@ function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <Router history={history}>
-          {/* <Header /> */}
+          <Header />
           <Routes />
           <GlobalStyles />
         </Router>

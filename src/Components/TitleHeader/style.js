@@ -15,8 +15,4 @@ export const Container = styled.div`
       font-size: 40px;
     }
   }
-
-  @media screen and (max-width: 1023px) {
-    display: none;
-  }
 `;

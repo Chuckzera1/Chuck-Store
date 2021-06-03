@@ -14,7 +14,12 @@ export default function cart(state = INITAL_STATE, action) {
         );
         break;
       case 'CART_DECREASE':
-        draft.products[action.payload.value].quantity -= 1;
+        draft.products[action.payload.value.index].quantity -= 1;
+        draft.products[action.payload.value.index].stock += 1;
+        break;
+      case 'CART_INCREASE':
+        draft.products[action.payload.value.index].quantity += 1;
+        draft.products[action.payload.value.index].stock -= 1;
         break;
       case 'CART_ADD':
         // Se já existir no carrinho, ele adiciona a quantidade selecionada

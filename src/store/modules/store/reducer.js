@@ -21,6 +21,13 @@ export default function store(state = INITIAL_STATE, action) {
       case 'LOAD_FAIL':
         draft.error = action.payload.value;
         break;
+      case 'UPDATE_QUANTITY':
+        draft.data[action.payload.value.id - 1].quantity =
+          action.payload.value.quantity;
+        break;
+      case 'RESET_QUANTITY':
+        draft.data = draft.data.map((d) => ({ ...d, quantity: 0 }));
+        break;
       default:
         break;
     }

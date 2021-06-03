@@ -38,8 +38,6 @@ export const Container = styled.div`
     align-items: flex-end;
     margin-left: auto;
   }
-  .product-total {
-  }
   .order-info {
     display: flex;
     justify-content: center;

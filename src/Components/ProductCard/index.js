@@ -8,24 +8,13 @@ import { Container } from './styles';
 
 function ProductCard({ product, products, loading }) {
   const dispatch = useDispatch();
-  const { name, price, id, image } = product;
+  const { name, price, image, stock } = product;
   const [quantity, setQuantity] = useState(0);
-  const [show, setShow] = useState(false);
   const [error, setError] = useState(false);
-  const [alertType, setAlertType] = useState('');
-  const [alertMessage, setAlertMessage] = useState('');
+  const [show, setShow] = useState(false);
 
-  // Mostra popup informando sucesso ou falha
-  // eslint-disable-next-line no-unused-vars
-  function showAlertFeedback(
-    message = `${quantity}x ${name} added successfully`,
-    isError = false
-  ) {
+  function showAlertFeedback() {
     setShow(false);
-    const type = isError ? 'error' : 'success';
-    setAlertType(type);
-    setAlertMessage(message);
-    setError(isError);
 
     setShow(true);
     // Mantem o alerta visivel por 3 segundos
@@ -38,11 +27,9 @@ function ProductCard({ product, products, loading }) {
   function handleOnChange(e) {
     const { value, validity } = e.target;
     if (!validity.valid) return;
-
-    if (parseInt(value, 10) > product.stock) {
-      const message = `${product.name} out of stock! In stock only ${product.stock}`;
-      showAlertFeedback(message, true);
-      return;
+    setError(false);
+    if (parseInt(value, 10) > stock - product.quantity) {
+      setError(true);
     }
 
     setQuantity(value);
@@ -50,9 +37,8 @@ function ProductCard({ product, products, loading }) {
 
   // Dispara ação de adição do produto
   async function addToCart() {
-    if (!quantity) {
-      const message = 'Enter the amount, please';
-      showAlertFeedback(message, true);
+    if (!quantity || quantity < 1) {
+      setError(true);
       return;
     }
     product = {
@@ -66,8 +52,8 @@ function ProductCard({ product, products, loading }) {
 
   return (
     <>
+      <Alert message={`${name} added successfuly`} type="success" show={show} />
       <Container>
-        <Alert message={alertMessage} type={alertType} show={show} />
         <div className="info-card">
           <div className="card-body">
             {!loading && (
@@ -78,29 +64,37 @@ function ProductCard({ product, products, loading }) {
                 <div className="primary-info">{name}</div>
                 <div className="secondary-info">
                   <span className="price">${price}</span>
-                  <div className="quantity-input">
-                    <input
-                      pattern="[0-9]*"
-                      className={error ? 'error' : ''}
-                      onChange={(e) => handleOnChange(e)}
-                      value={quantity || ''}
-                      maxLength="5"
-                      placeholder="Product amount"
-                    />
-                  </div>
-                  <div className="add-product">
-                    <button
-                      type="button"
-                      className="btn-add-product"
-                      onClick={() => addToCart()}
-                    >
-                      Adicionar
-                    </button>
+                  <div className="quantity">
+                    <div className="quantity-input">
+                      <input
+                        pattern="[0-9]*"
+                        className={error ? 'error' : ''}
+                        onChange={(e) => handleOnChange(e)}
+                        value={quantity || ''}
+                        maxLength="5"
+                        placeholder="Product amount"
+                      />
+                      {error && (
+                        <span className="error-info">
+                          Stock: {stock - product.quantity}
+                        </span>
+                      )}
+                    </div>
+                    <div className="add-product">
+                      <button
+                        type="button"
+                        className="btn-add-product"
+                        disabled={error}
+                        onClick={() => addToCart()}
+                      >
+                        Adicionar
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
-            {!id && !loading && (
+            {!product && !loading && (
               <div className="empty-data">
                 <div>Nenhuma informação disponível.</div>
               </div>

@@ -1,7 +1,7 @@
 import TitleHeader from 'Components/TitleHeader';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { cartClearProducts } from 'store/modules/cart/action';
+import { cartClearRequest } from 'store/modules/cart/action';
 import { Container } from './styles';
 
 function CartResume() {
@@ -11,7 +11,6 @@ function CartResume() {
   const [productsTotalPrice, setProductsTotalPrice] = useState(0);
 
   useEffect(() => {
-    console.log(products);
     if (!products) return;
     let total = 0;
     products.forEach(({ price, quantity }) => {
@@ -46,7 +45,7 @@ function CartResume() {
           <button
             className="button-clear"
             type="button"
-            onClick={() => dispatch(cartClearProducts())}
+            onClick={() => dispatch(cartClearRequest())}
           >
             Clear Cart
           </button>

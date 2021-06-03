@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FiMenu, FiArrowLeft } from 'react-icons/fi';
 
 import Sidebar from 'Components/Sidebar';
@@ -25,11 +24,6 @@ function Header() {
           </div>
           <span className="sr-only">Menu Principal</span>
         </button>
-        <div className="topbar-logo">
-          <Link to="/" title="Dashboard" className="logo">
-            Home
-          </Link>
-        </div>
       </div>
     </Container>
   );

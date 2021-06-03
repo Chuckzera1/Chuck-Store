@@ -14,7 +14,7 @@ import TitleHeader from 'Components/TitleHeader';
 function Store() {
   const [productsFiltered, setProductsFiltered] = useState([]);
   const { data, loaded, loading, error } = useSelector((state) => state.store);
-  const { products, error: cartError } = useSelector((state) => state.cart);
+  const { products } = useSelector((state) => state.cart);
   const { searchValue } = useSelector((state) => state.search);
 
   const dispatch = useDispatch();
@@ -54,7 +54,6 @@ function Store() {
   }, [searchValue, data]);
 
   useEffect(() => {
-    console.log(cartError);
     loadProducts();
   }, []);
 
@@ -72,10 +71,11 @@ function Store() {
         )}
         <ul className="shop-list">
           {productsFiltered.length > 0 &&
-            productsFiltered.map((product, { id }) => (
+            productsFiltered.map((product, index, { id }) => (
               <li key={id}>
                 <ProductCard
                   product={product}
+                  index={index}
                   products={products}
                   loading={loading}
                 />

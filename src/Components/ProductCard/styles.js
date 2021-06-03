@@ -45,11 +45,13 @@ export const Container = styled.div`
     justify-content: flex-start;
     margin: 10px 10px 0 10px;
     font-weight: bold;
-    .price,
-    .btn-add-product {
-      color: orange;
-      margin-right: 19px;
-      margin-top: 10px;
+  }
+  .price,
+  .btn-add-product {
+    color: orange;
+    margin-right: 19px;
+    :disabled {
+      cursor: not-allowed;
     }
   }
 
@@ -86,6 +88,17 @@ export const Container = styled.div`
     stroke-linejoin: round;
     pointer-events: none;
   }
+  .quantity {
+    display: flex;
+    flex-direction: row;
+  }
+  .quantity-input {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   input {
     -webkit-appearance: none;
     padding: 7px 7px 7px 7px;
@@ -98,12 +111,13 @@ export const Container = styled.div`
     font-size: 16px;
     transition: all 150ms ease;
     text-align: center;
+    margin-top: -12px;
     &::placeholder {
       font-size: 10px;
       color: #cecdcd;
     }
     &.error {
-      border: 2px solid #f44242;
+      border: 2px solid #f44242 !important;
     }
     &:focus {
       outline: none;
@@ -115,12 +129,9 @@ export const Container = styled.div`
     }
   }
 
-  .sprites {
-    position: absolute;
-    width: 0;
-    height: 0;
-    pointer-events: none;
-    user-select: none;
+  .error-info {
+    color: red;
+    font-size: 11px;
   }
 
   .add-product {
