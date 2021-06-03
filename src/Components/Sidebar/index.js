@@ -22,7 +22,6 @@ function Sidebar({ handleMenu, isMenuOpened }) {
 
   return (
     <aside className="sidebar">
-      Store
       <nav className="leads-menu">
         <ul className="main-menu">
           <li>

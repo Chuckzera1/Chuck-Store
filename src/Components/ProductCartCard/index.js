@@ -12,6 +12,7 @@ function ProductCartCard({ product, products }) {
   const dispatch = useDispatch();
   const { id, name, image, price, quantity, stock } = product;
 
+  // Verifica se ainda tem e estoque antes de adicionar
   function addQuantity() {
     if (stock - quantity < 1) {
       alert('Out of Stock');
@@ -20,10 +21,12 @@ function ProductCartCard({ product, products }) {
     dispatch(increaseProduct({ product, products }));
   }
 
+  // Remove o produto do carrinho
   function removeItem() {
     dispatch(removeProduct({ id: product.id }));
   }
 
+  // Caso só tenha um item, ele remove do carrinho
   function removeQuantity() {
     if (quantity > 1) dispatch(decreaseProduct({ product, products }));
     else removeItem();
@@ -93,7 +96,7 @@ ProductCartCard.propTypes = {
         stock: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
       }),
-    }).isRequired
+    })
   ),
 };
 
