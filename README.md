@@ -1,5 +1,10 @@
 # ChuckStore
 
+Chuckstore é projeto front-end de e-commerce feito em React/Redux
+  -Foi utilizado Redux Persistor para persistir os dados no navegador
+    caso o usuário atualize ou feche a aba
+
+
 #### Dependências necessárias de desenvolvimento
 
 - Eslint
