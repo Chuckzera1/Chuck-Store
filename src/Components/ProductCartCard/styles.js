@@ -51,6 +51,11 @@ export const Container = styled.div`
       background: orange;
       border: 0px;
       color: white;
+      &.remove-item {
+        background: transparent;
+        color: orange;
+        text-decoration: underline;
+      }
     }
   }
 

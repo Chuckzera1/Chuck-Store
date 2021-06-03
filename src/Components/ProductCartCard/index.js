@@ -1,20 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { addProduct } from 'store/modules/cart/action';
+import {
+  decreaseProduct,
+  increaseProduct,
+  removeProduct,
+} from 'store/modules/cart/action';
 import { Container } from './styles';
 
 function ProductCartCard({ product, products }) {
   const dispatch = useDispatch();
-  const { id, name, image, price, quantity } = product;
+  const { id, name, image, price, quantity, stock } = product;
+
+  // Verifica se ainda tem e estoque antes de adicionar
   function addQuantity() {
-    product = { ...product, quantity: 1 };
-    dispatch(addProduct({ product, products }));
+    if (stock - quantity < 1) {
+      alert('Out of Stock');
+      return;
+    }
+    dispatch(increaseProduct({ product, products }));
   }
 
+  // Remove o produto do carrinho
+  function removeItem() {
+    dispatch(removeProduct({ id: product.id }));
+  }
+
+  // Caso só tenha um item, ele remove do carrinho
   function removeQuantity() {
-    product = { ...product, quantity: -1 };
-    dispatch(addProduct({ product, products }));
+    if (quantity > 1) dispatch(decreaseProduct({ product, products }));
+    else removeItem();
   }
 
   return (
@@ -28,18 +43,27 @@ function ProductCartCard({ product, products }) {
               </div>
               <div className="primary-info">{name}</div>
               <div className="secondary-info">
-                <span className="button-decremease">
-                  <button type="button" onClick={removeQuantity}>
-                    -
-                  </button>
-                </span>
-                <span className="quantity">{quantity}x</span>
-                <span className="button-increment">
-                  <button type="button" onClick={addQuantity}>
-                    +
-                  </button>
-                </span>
-                <span className="price">${price}</span>
+                <button
+                  className="remove-item"
+                  type="button"
+                  onClick={removeItem}
+                >
+                  Remover
+                </button>
+                <div className="buttons-price">
+                  <span className="price">${price}</span>
+                  <span className="button-decremease">
+                    <button type="button" onClick={removeQuantity}>
+                      -
+                    </button>
+                  </span>
+                  <span className="quantity">{quantity}x</span>
+                  <span className="button-increment">
+                    <button type="button" onClick={addQuantity}>
+                      +
+                    </button>
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -59,6 +83,7 @@ ProductCartCard.propTypes = {
     name: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
     quantity: PropTypes.number.isRequired,
   }).isRequired,
   products: PropTypes.arrayOf(
@@ -68,9 +93,10 @@ ProductCartCard.propTypes = {
         name: PropTypes.string.isRequired,
         price: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
+        stock: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
-      }).isRequired,
-    }).isRequired
+      }),
+    })
   ),
 };
 
